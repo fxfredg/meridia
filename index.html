@@ -1,0 +1,480 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Meridia — International meeting planner and time zone converter.">
+<meta name="theme-color" content="#002B50">
+<title>Meridia — International Meeting Planner</title>
+
+<style>
+:root {
+  --bg: #F3F7FB;
+  --surface: #FFFFFF;
+  --fg: #002B50;
+  --muted: #52677C;
+  --accent: #007AC2;
+  --green: #00BFA5;
+  --line: #DCE5ED;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.7;
+}
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+.nav {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 28px;
+  font-weight: 750;
+  letter-spacing: -1px;
+}
+.brand svg { width: 40px; height: 40px; }
+.languages {
+  display: flex;
+  gap: 6px;
+}
+button {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  color: var(--fg);
+  padding: 9px 15px;
+  cursor: pointer;
+  font-weight: 600;
+}
+button.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+.hero {
+  background: linear-gradient(135deg, #002B50, #007AC2);
+  color: white;
+  text-align: center;
+  padding: 80px 24px;
+}
+.hero h1 {
+  font-size: clamp(48px, 8vw, 76px);
+  line-height: 1.1;
+  margin: 0 0 20px;
+  letter-spacing: -3px;
+}
+.hero p {
+  font-size: 21px;
+  max-width: 650px;
+  margin: auto;
+  opacity: .95;
+}
+.hero-link {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  background: white;
+  color: var(--fg);
+  font-weight: 600;
+  text-decoration: none;
+}
+main {
+  max-width: 960px;
+  margin: auto;
+  padding: 40px 20px;
+}
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.feature, .policy, .contact {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 26px;
+}
+.feature { text-align: center; }
+.feature span {
+  display: block;
+  font-size: 30px;
+}
+.feature h3 { margin-bottom: 5px; }
+.feature p {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0;
+}
+.policy {
+  padding: clamp(24px, 5vw, 48px);
+  margin-bottom: 24px;
+}
+.policy h1 {
+  font-size: clamp(26px, 5vw, 38px);
+  line-height: 1.3;
+  margin-top: 0;
+}
+.policy h2 {
+  font-size: 20px;
+  margin-top: 32px;
+}
+.policy p, .policy li {
+  color: var(--muted);
+}
+.date { font-size: 14px; }
+a {
+  color: var(--accent);
+  overflow-wrap: anywhere;
+}
+.contact {
+  text-align: center;
+  padding: 35px 20px;
+}
+.contact h2 { margin-top: 0; }
+footer {
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+}
+[hidden] { display: none !important; }
+@media (max-width: 650px) {
+  .features { grid-template-columns: 1fr; }
+  .hero { padding: 55px 20px; }
+  .brand { font-size: 24px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <div class="brand">
+      <svg viewBox="0 0 48 48" fill="none"
+           aria-hidden="true">
+        <circle cx="24" cy="24" r="21"
+                stroke="#007AC2" stroke-width="2.5"/>
+        <ellipse cx="24" cy="24" rx="10" ry="21"
+                 stroke="#007AC2" stroke-width="2"/>
+        <path d="M3 24H45 M8 13H40 M8 35H40"
+              stroke="#007AC2" stroke-width="2"/>
+        <circle cx="34" cy="14" r="5" fill="#00BFA5"/>
+      </svg>
+      Meridia
+    </div>
+    <div class="languages" aria-label="Language">
+      <button id="btn-fr" onclick="setLanguage('fr')">FR</button>
+      <button id="btn-en" onclick="setLanguage('en')">EN</button>
+      <button id="btn-es" onclick="setLanguage('es')">ES</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Meridia</h1>
+
+  <div data-lang="fr">
+    <p>Trouvez l'heure qui convient à tout le monde.</p>
+    <a class="hero-link" href="#privacy">
+      Politique de confidentialité
+    </a>
+  </div>
+
+  <div data-lang="en" hidden>
+    <p>Find the time that works for everyone.</p>
+    <a class="hero-link" href="#privacy">Privacy Policy</a>
+  </div>
+
+  <div data-lang="es" hidden>
+    <p>Encuentra la hora que le sirve a todos.</p>
+    <a class="hero-link" href="#privacy">Política de privacidad</a>
+  </div>
+</section>
+
+<main>
+
+<div class="features" data-lang="fr">
+  <div class="feature">
+    <span>🌐</span>
+    <h3>Fuseaux horaires</h3>
+    <p>Coordonnez vos réunions internationales.</p>
+  </div>
+  <div class="feature">
+    <span>🕒</span>
+    <h3>Planification intelligente</h3>
+    <p>Trouvez les meilleurs créneaux horaires.</p>
+  </div>
+  <div class="feature">
+    <span>🔒</span>
+    <h3>Confidentialité</h3>
+    <p>Aucun compte requis.</p>
+  </div>
+</div>
+
+<div class="features" data-lang="en" hidden>
+  <div class="feature">
+    <span>🌐</span>
+    <h3>Time Zones</h3>
+    <p>Coordinate international meetings.</p>
+  </div>
+  <div class="feature">
+    <span>🕒</span>
+    <h3>Smart Scheduling</h3>
+    <p>Find the best meeting times.</p>
+  </div>
+  <div class="feature">
+    <span>🔒</span>
+    <h3>Privacy</h3>
+    <p>No account required.</p>
+  </div>
+</div>
+
+<div class="features" data-lang="es" hidden>
+  <div class="feature">
+    <span>🌐</span>
+    <h3>Zonas horarias</h3>
+    <p>Coordina reuniones internacionales.</p>
+  </div>
+  <div class="feature">
+    <span>🕒</span>
+    <h3>Planificación inteligente</h3>
+    <p>Encuentra los mejores horarios.</p>
+  </div>
+  <div class="feature">
+    <span>🔒</span>
+    <h3>Privacidad</h3>
+    <p>No se requiere una cuenta.</p>
+  </div>
+</div>
+
+<div id="privacy">
+
+<!-- FRANÇAIS -->
+
+<article class="policy" data-lang="fr">
+<h1>Politique de confidentialité</h1>
+<p class="date">Projet — 25 novembre 2026</p>
+
+<h2>1. Introduction</h2>
+<p>Meridia est une application de planification de réunions internationales et de conversion de fuseaux horaires. Nous accordons une grande importance à votre vie privée.</p>
+
+<h2>2. Collecte de données</h2>
+<p>Meridia ne nécessite pas de compte et ne collecte pas directement votre nom, votre adresse courriel, votre numéro de téléphone ou votre position GPS.</p>
+
+<h2>3. Stockage local</h2>
+<p>Les préférences suivantes sont enregistrées localement sur votre appareil :</p>
+<ul>
+  <li>Villes et fuseaux horaires sélectionnés.</li>
+  <li>Ville de référence.</li>
+  <li>Langue de l'application.</li>
+  <li>Format horaire.</li>
+  <li>Heures de bureau.</li>
+  <li>Durée des réunions.</li>
+  <li>Préférences d'apparence.</li>
+</ul>
+<p>Ces informations ne sont pas transmises aux serveurs du développeur par l'application.</p>
+
+<h2>4. Informations système</h2>
+<p>Meridia peut utiliser la langue, le fuseau horaire et les préférences d'apparence de votre appareil afin d'adapter son fonctionnement.</p>
+
+<h2>5. Calendrier et partage</h2>
+<p>Vous pouvez volontairement ajouter une réunion à votre calendrier ou partager ses informations. Les applications et services que vous choisissez peuvent traiter ces informations selon leurs propres politiques de confidentialité.</p>
+<p>Meridia ne consulte pas vos événements de calendrier existants. Les disponibilités affichées sont calculées à partir des heures de bureau configurées.</p>
+
+<h2>6. Publicité et suivi</h2>
+<p>La version actuelle de Meridia ne comporte pas de publicité, de suivi publicitaire ni d'outils d'analyse comportementale identifiés dans son code source.</p>
+
+<h2>7. Suppression des données</h2>
+<p>Vous pouvez supprimer les préférences locales en supprimant complètement l'application. Les sauvegardes de votre appareil, les événements de calendrier et les informations déjà partagées sont gérés séparément.</p>
+
+<h2>8. Site Web et communications</h2>
+<p>Ce site n'intègre aucun outil publicitaire ou analytique ajouté par Meridia. Il est hébergé par GitHub Pages, qui peut traiter certaines données techniques de connexion.</p>
+<p>Si vous nous contactez par courriel, les informations que vous fournissez sont utilisées pour répondre à votre demande.</p>
+<p><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">Politique de confidentialité de GitHub</a>.</p>
+
+<h2>9. Modifications</h2>
+<p>Cette politique peut être mise à jour pour refléter les évolutions de l'application et les exigences légales applicables.</p>
+
+<h2>10. Contact</h2>
+<p>Pour toute question concernant votre vie privée ou vos renseignements personnels :</p>
+<a href="mailto:meridiaapp.contact@gmail.com">meridiaapp.contact@gmail.com</a>
+</article>
+
+<!-- ENGLISH -->
+
+<article class="policy" data-lang="en" hidden>
+<h1>Privacy Policy</h1>
+<p class="date">Draft — November 25, 2026</p>
+
+<h2>1. Introduction</h2>
+<p>Meridia is an international meeting planning and time zone conversion application. We value and respect your privacy.</p>
+
+<h2>2. Data Collection</h2>
+<p>Meridia does not require an account and does not directly collect your name, email address, phone number or GPS location.</p>
+
+<h2>3. Local Storage</h2>
+<p>The following preferences are stored locally on your device:</p>
+<ul>
+  <li>Selected cities and time zones.</li>
+  <li>Reference city.</li>
+  <li>Application language.</li>
+  <li>Time format.</li>
+  <li>Working hours.</li>
+  <li>Meeting duration.</li>
+  <li>Appearance preferences.</li>
+</ul>
+<p>This information is not transmitted to the developer's servers by the application.</p>
+
+<h2>4. System Information</h2>
+<p>Meridia may use your device's language, time zone and appearance preferences to customize its functionality.</p>
+
+<h2>5. Calendar and Sharing</h2>
+<p>You may voluntarily add a meeting to your calendar or share meeting information. The applications and services you select may process this information according to their own privacy policies.</p>
+<p>Meridia does not read your existing calendar events. Displayed availability is calculated using configured working hours.</p>
+
+<h2>6. Advertising and Tracking</h2>
+<p>No advertising, advertising trackers or behavioral analytics tools have been identified in the current version's source code.</p>
+
+<h2>7. Data Deletion</h2>
+<p>You can remove locally stored preferences by completely deleting the application. Device backups, calendar events and previously shared information are managed separately.</p>
+
+<h2>8. Website and Communications</h2>
+<p>This website does not include advertising or analytics tools added by Meridia. It is hosted by GitHub Pages, which may process technical connection data.</p>
+<p>If you contact us by email, the information you provide is used to respond to your request.</p>
+<p><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub Privacy Statement</a>.</p>
+
+<h2>9. Changes</h2>
+<p>This policy may be updated to reflect changes to the application and applicable legal requirements.</p>
+
+<h2>10. Contact</h2>
+<p>For questions regarding your privacy or personal information:</p>
+<a href="mailto:meridiaapp.contact@gmail.com">meridiaapp.contact@gmail.com</a>
+</article>
+
+<!-- ESPAÑOL -->
+
+<article class="policy" data-lang="es" hidden>
+<h1>Política de privacidad</h1>
+<p class="date">Borrador — 25 de noviembre de 2026</p>
+
+<h2>1. Introducción</h2>
+<p>Meridia es una aplicación de planificación de reuniones internacionales y conversión de zonas horarias. Valoramos y respetamos su privacidad.</p>
+
+<h2>2. Recopilación de datos</h2>
+<p>Meridia no requiere una cuenta y no recopila directamente su nombre, correo electrónico, número de teléfono ni ubicación GPS.</p>
+
+<h2>3. Almacenamiento local</h2>
+<p>Las siguientes preferencias se almacenan localmente en su dispositivo:</p>
+<ul>
+  <li>Ciudades y zonas horarias seleccionadas.</li>
+  <li>Ciudad de referencia.</li>
+  <li>Idioma de la aplicación.</li>
+  <li>Formato de hora.</li>
+  <li>Horario laboral.</li>
+  <li>Duración de las reuniones.</li>
+  <li>Preferencias de apariencia.</li>
+</ul>
+<p>La aplicación no transmite esta información a los servidores del desarrollador.</p>
+
+<h2>4. Información del sistema</h2>
+<p>Meridia puede utilizar el idioma, la zona horaria y las preferencias de apariencia de su dispositivo para adaptar su funcionamiento.</p>
+
+<h2>5. Calendario y uso compartido</h2>
+<p>Puede añadir voluntariamente una reunión a su calendario o compartir su información. Las aplicaciones y servicios que seleccione pueden procesar esta información según sus propias políticas de privacidad.</p>
+<p>Meridia no consulta los eventos existentes de su calendario. La disponibilidad se calcula utilizando el horario laboral configurado.</p>
+
+<h2>6. Publicidad y seguimiento</h2>
+<p>No se han identificado anuncios, rastreadores publicitarios ni herramientas de análisis del comportamiento en el código fuente de la versión actual.</p>
+
+<h2>7. Eliminación de datos</h2>
+<p>Puede eliminar las preferencias locales eliminando completamente la aplicación. Las copias de seguridad, los eventos del calendario y la información compartida anteriormente se gestionan por separado.</p>
+
+<h2>8. Sitio web y comunicaciones</h2>
+<p>Este sitio no incluye herramientas publicitarias o analíticas añadidas por Meridia. Está alojado en GitHub Pages, que puede procesar datos técnicos de conexión.</p>
+<p>Si nos contacta por correo electrónico, utilizaremos la información proporcionada para responder a su solicitud.</p>
+<p><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">Política de privacidad de GitHub</a>.</p>
+
+<h2>9. Modificaciones</h2>
+<p>Esta política puede actualizarse para reflejar cambios en la aplicación y los requisitos legales aplicables.</p>
+
+<h2>10. Contacto</h2>
+<p>Para cualquier pregunta sobre su privacidad o sus datos personales:</p>
+<a href="mailto:meridiaapp.contact@gmail.com">meridiaapp.contact@gmail.com</a>
+</article>
+
+</div>
+
+<section class="contact">
+  <div data-lang="fr">
+    <h2>Besoin d'aide ?</h2>
+    <p>Contactez le support de Meridia.</p>
+  </div>
+  <div data-lang="en" hidden>
+    <h2>Need help?</h2>
+    <p>Contact Meridia support.</p>
+  </div>
+  <div data-lang="es" hidden>
+    <h2>¿Necesita ayuda?</h2>
+    <p>Contacte con el soporte de Meridia.</p>
+  </div>
+  <a href="mailto:meridiaapp.contact@gmail.com">
+    meridiaapp.contact@gmail.com
+  </a>
+</section>
+
+</main>
+
+<footer>
+  <span data-lang="fr">© 2026 Meridia. Tous droits réservés.</span>
+  <span data-lang="en" hidden>© 2026 Meridia. All rights reserved.</span>
+  <span data-lang="es" hidden>© 2026 Meridia. Todos los derechos reservados.</span>
+</footer>
+
+<script>
+function setLanguage(lang) {
+  document.documentElement.lang = lang;
+
+  document.querySelectorAll('[data-lang]').forEach(element => {
+    element.hidden = element.dataset.lang !== lang;
+  });
+
+  document.querySelectorAll('.languages button').forEach(button => {
+    const active = button.id === 'btn-' + lang;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-pressed', String(active));
+  });
+}
+
+const browserLang = (navigator.language || 'en')
+  .slice(0, 2).toLowerCase();
+
+setLanguage(
+  ['fr', 'en', 'es'].includes(browserLang)
+    ? browserLang
+    : 'en'
+);
+</script>
+
+</body>
+</html>
